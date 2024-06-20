@@ -1,0 +1,140 @@
+﻿<Window x:Class="ip_validator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ip_validator"
+        mc:Ignorable="d"
+        Title="IP Validator" Height="600" Width="700" Background="#f0f0f0">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#888"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#e0e0e0"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#333"/>
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <local:DecimalToBinaryConverter x:Key="DecimalToBinaryConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- IP Address Section -->
+        <TextBlock Text="IP Address" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontWeight="Bold" FontSize="16"/>
+        <TextBlock Text="Octet 1" Grid.Row="1" Grid.Column="0"/>
+        <TextBlock Text="Octet 2" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock Text="Octet 3" Grid.Row="1" Grid.Column="2"/>
+        <TextBlock Text="Octet 4" Grid.Row="1" Grid.Column="3"/>
+
+        <TextBox x:Name="ip1octet" Text="{Binding ElementName=sldip1octet, Path=Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="0" MaxLength="3"/>
+        <TextBox x:Name="ip2octet" Text="{Binding ElementName=sldip2octet, Path=Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" MaxLength="3"/>
+        <TextBox x:Name="ip3octet" Text="{Binding ElementName=sldip3octet, Path=Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" MaxLength="3"/>
+        <TextBox x:Name="ip4octet" Text="{Binding ElementName=sldip4octet, Path=Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="3" MaxLength="3"/>
+
+        <Slider x:Name="sldip1octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="0" Value="{Binding ElementName=ip1octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden"/>
+        <Slider x:Name="sldip2octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="1" Value="{Binding ElementName=ip2octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden" />
+        <Slider x:Name="sldip3octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="2" Value="{Binding ElementName=ip3octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden"/>
+        <Slider x:Name="sldip4octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="3" Value="{Binding ElementName=ip4octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden" />
+
+        <!-- Binary IP Section -->
+        <TextBlock Text="Binary IP" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" FontWeight="Bold" FontSize="16"/>
+        <TextBlock Text="Octet 1" Grid.Row="4" Grid.Column="0"/>
+        <TextBlock Text="Octet 2" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Text="Octet 3" Grid.Row="4" Grid.Column="2"/>
+        <TextBlock Text="Octet 4" Grid.Row="4" Grid.Column="3"/>
+
+        <TextBox x:Name="bip1octet" Text="{Binding ElementName=ip1octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="5" Grid.Column="0" MaxLength="8"/>
+        <TextBox x:Name="bip2octet" Text="{Binding ElementName=ip2octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" MaxLength="8"/>
+        <TextBox x:Name="bip3octet" Text="{Binding ElementName=ip3octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="5" Grid.Column="2" MaxLength="8"/>
+        <TextBox x:Name="bip4octet" Text="{Binding ElementName=ip4octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="5" Grid.Column="3" MaxLength="8"/>
+
+        <!-- Subnet Address Section -->
+        <TextBlock Text="Subnet Address" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" FontWeight="Bold" FontSize="16"/>
+        <TextBlock Text="Octet 1" Grid.Row="8" Grid.Column="0"/>
+        <TextBlock Text="Octet 2" Grid.Row="8" Grid.Column="1"/>
+        <TextBlock Text="Octet 3" Grid.Row="8" Grid.Column="2"/>
+        <TextBlock Text="Octet 4" Grid.Row="8" Grid.Column="3"/>
+
+        <TextBox x:Name="sub1octet" Text="{Binding ElementName=sldsub1octet, Path=Value, Mode=TwoWay}" Grid.Row="9" Grid.Column="0" MaxLength="3"/>
+        <TextBox x:Name="sub2octet" Text="{Binding ElementName=sldsub2octet, Path=Value, Mode=TwoWay}" Grid.Row="9" Grid.Column="1" MaxLength="3"/>
+        <TextBox x:Name="sub3octet" Text="{Binding ElementName=sldsub3octet, Path=Value, Mode=TwoWay}" Grid.Row="9" Grid.Column="2" MaxLength="3"/>
+        <TextBox x:Name="sub4octet" Text="{Binding ElementName=sldsub4octet, Path=Value, Mode=TwoWay}" Grid.Row="9" Grid.Column="3" MaxLength="3"/>
+
+
+        <Slider x:Name="sldsub1octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="0" Value="{Binding ElementName=sub1octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden"/>
+        <Slider x:Name="sldsub2octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="1" Value="{Binding ElementName=sub2octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden" />
+        <Slider x:Name="sldsub3octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="2" Value="{Binding ElementName=sub3octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden"/>
+        <Slider x:Name="sldsub4octet" Minimum="0" Maximum="255" Grid.Row="6" Grid.Column="3" Value="{Binding ElementName=sub4octet, Path=Text, Mode=TwoWay}" SmallChange="1" Visibility="Hidden" />
+
+        <!-- Subnet Binary Section -->
+        <TextBlock Text="Subnet Binary" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" FontWeight="Bold" FontSize="16"/>
+        <TextBlock Text="Octet 1" Grid.Row="11" Grid.Column="0"/>
+        <TextBlock Text="Octet 2" Grid.Row="11" Grid.Column="1"/>
+        <TextBlock Text="Octet 3" Grid.Row="11" Grid.Column="2"/>
+        <TextBlock Text="Octet 4" Grid.Row="11" Grid.Column="3"/>
+
+        <TextBox x:Name="subbin1octet1" Text="{Binding ElementName=sub1octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="12" Grid.Column="0" MaxLength="8"/>
+        <TextBox x:Name="subbin2octet2" Text="{Binding ElementName=sub2octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="12" Grid.Column="1" MaxLength="8"/>
+        <TextBox x:Name="subbin3octet3" Text="{Binding ElementName=sub3octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="12" Grid.Column="2" MaxLength="8"/>
+        <TextBox x:Name="subbin4octet4" Text="{Binding ElementName=sub4octet, Path=Text, Converter={StaticResource DecimalToBinaryConverter}, Mode=TwoWay}" Grid.Row="12" Grid.Column="3" MaxLength="8"/>
+
+        <!-- Validation and Class Section -->
+        <TextBlock Text="Validation" Grid.Row="6" Grid.Column="0" FontWeight="Bold" FontSize="16"/>
+        <TextBlock x:Name="textvalid" Text="IP Valid" Grid.Row="6" Grid.Column="1"/>
+        <TextBlock x:Name="textclass" Text="IP Class" Grid.Row="6" Grid.Column="2"/>
+
+        <TextBlock Text="Hosts" Grid.Row="14" Grid.Column="0" FontWeight="Bold" FontSize="16"/>
+        <TextBlock Text="First Host" Grid.Row="15" Grid.Column="0"/>
+        <TextBlock Text="Last Host" Grid.Row="15" Grid.Column="1"/>
+        <TextBlock Text="Broadcast" Grid.Row="15" Grid.Column="2"/>
+        <TextBlock Text="Number of Hosts" Grid.Row="15" Grid.Column="3"/>
+
+        <TextBox x:Name="firstHostTextBox" Text="{Binding FirstHostAddress}" Grid.Row="16" Grid.Column="0" IsReadOnly="True"/>
+        <TextBox x:Name="lastHostTextBox" Text="{Binding LastHostAddress}" Grid.Row="16" Grid.Column="1" IsReadOnly="True"/>
+        <TextBox x:Name="broadcastTextBox" Text="{Binding BroadcastAddress}" Grid.Row="16" Grid.Column="2" IsReadOnly="True"/>
+        <TextBox x:Name="numberOfHostsTextBox" Text="{Binding NumberOfHosts}" Grid.Row="16" Grid.Column="3" IsReadOnly="True"/>
+
+    </Grid>
+</Window>
